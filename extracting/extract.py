@@ -31,7 +31,7 @@ def extract_data():
         pageToken=""
         
         url = "https://www.googleapis.com/youtube/v3/search?key="+os.getenv("api_key")+"&channelId="+os.getenv("channel_id")+\
-        "&part=snippet,id&order=date&maxResults=200&"+pageToken
+        "&part=snippet,id&order=date&maxResults=5000&"+pageToken
         
         response = requests.get(url).json()
         logging.info("Exctracted data from API")
@@ -52,6 +52,7 @@ def extract_data():
             df = df._append({"video_id":video_id,"video_title":video_title,"upload_date":upload_date, "view_count":view_count, "like_count":like_count,
                     "comment_count":comment_count}, ignore_index=True)
         logging.info(f"Transformed {df.shape[0]} rows succesfully")
+        
          
     except  Exception as e:
         logging.error(f"{e}")
